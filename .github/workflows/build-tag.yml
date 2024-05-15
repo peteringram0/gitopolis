@@ -1,9 +1,13 @@
 name: build-tag
 
+# on:
+#   push:
+#     tags: [ "v*" ]
+
 on:
   push:
-    tags: [ "v*" ]
-
+    branches:
+      - '**'
 jobs:
   ci:
     uses: ./.github/workflows/_release.yml
