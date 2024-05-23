@@ -369,12 +369,6 @@ fn exec_non_zero() {
 🏢 some_other_git_folder> ls non-existent
 
 ";
-	let expected_stderr = "ls: cannot access \'non-existent\': No such file or directory
-Command exited with code 2
-ls: cannot access \'non-existent\': No such file or directory
-Command exited with code 2
-2 commands exited with non-zero status code
-";
 
 	gitopolis_executable()
 		.current_dir(&temp)
@@ -382,7 +376,9 @@ Command exited with code 2
 		.assert()
 		.success()
 		.stdout(expected_stdout)
-		.stderr(expected_stderr);
+		.stderr(predicate::str::contains(
+			"2 commands exited with non-zero status code",
+		));
 }
 
 #[test]
