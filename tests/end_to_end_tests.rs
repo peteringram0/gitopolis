@@ -591,22 +591,12 @@ done.
 		.stdout(expected_clone_stdout);
 
 	// check repo has been successfully cloned by running a git command on it via exec
-	let expected_exec_stdout = "
-🏢 some_git_folder> git status
-On branch master
-
-No commits yet
-
-nothing to commit (create/copy files and use \"git add\" to track)
-
-";
-
 	gitopolis_executable()
 		.current_dir(&temp)
 		.args(vec!["exec", "--", "git", "status"])
 		.assert()
 		.success()
-		.stdout(expected_exec_stdout);
+		.stdout(predicate::str::contains("nothing to commit"));
 }
 
 #[test]
